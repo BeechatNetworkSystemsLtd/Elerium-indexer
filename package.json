@@ -42,13 +42,17 @@
     "prettier"
   ],
   "dependencies": {
+    "@chainsafe/libp2p-gossipsub": "^13.0.0",
+    "@orbitdb/core": "^2.1.0",
     "bcryptjs": "^2.4.3",
+    "blockstore-level": "^1.1.8",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "cross-env": "^7.0.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-rate-limit": "^5.0.0",
+    "helia": "^4.1.0",
     "helmet": "^4.1.0",
     "http-status": "^1.4.0",
     "joi": "^17.3.0",

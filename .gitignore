@@ -1,5 +1,7 @@
 # Dependencies
 node_modules
+orbitdb
+ipfs
 
 # yarn error logs
 yarn-error.log

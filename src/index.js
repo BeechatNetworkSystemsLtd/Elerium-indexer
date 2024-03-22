@@ -1,6 +1,6 @@
-import app from './app;
-import config from './config/config;
-import logger from './config/logger;
+import app from './app';
+import config from './config/config';
+import logger from './config/logger';
 
 let server;
 

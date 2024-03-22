@@ -5,6 +5,9 @@ import express from 'express';
 // import auth from '../../middlewares/auth;
 
 const router = express.Router();
+router.get('/', (req, res) => {
+  res.send('Hello World');
+});
 
 // router.post('/register', validate(authValidation.register), authController.register);
 // router.post('/login', validate(authValidation.login), authController.login);

@@ -11,6 +11,7 @@ env:
     - JWT_SECRET=thisisasamplesecret
     - JWT_ACCESS_EXPIRATION_MINUTES=30
     - JWT_REFRESH_EXPIRATION_DAYS=30
+    - ORBITDB_URL=/orbitdb/zdpuAzorvivaBQcgp65wNuk3xNu41i7cgr9aup1HKpPmv1z5Y
 script:
   - yarn lint
   - yarn test

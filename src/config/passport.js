@@ -1,6 +1,6 @@
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import config from './config';
-import { tokenTypes } from './tokens';
+import config from './config.js';
+import { tokenTypes } from './tokens.js';
 // import { User } from '../models';
 
 const jwtOptions = {

@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
-import catchAsync from '../utils/catchAsync';
-import { dataModel } from '../models/index';
-import DB from '../models/db';
+import catchAsync from '../utils/catchAsync.js';
+import { dataModel } from '../models/index.js';
+import DB from '../models/db.js';
 
 const createData = catchAsync(async (req, res) => {
   const dbName = await dataModel.create();

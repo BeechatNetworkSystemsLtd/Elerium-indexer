@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
-import { User } from '../models';
-import ApiError from '../utils/ApiError';
-import { dataModel } from '../models/index';
+import { User } from '../models.js';
+import ApiError from '../utils/ApiError.js';
+import { dataModel } from '../models/index.js';
 
 const db = dataModel.init();
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import dataRoute from './data.route';
+import dataRoute from './data.route.js';
 
 const router = express.Router();
 

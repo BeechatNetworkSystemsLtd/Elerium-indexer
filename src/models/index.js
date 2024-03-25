@@ -1,3 +1,3 @@
-import dataModel from './data.model';
+import dataModel from './data.model.js';
 
 export { dataModel };

@@ -1,3 +1,3 @@
-import dataController from './data.controller';
+import dataController from './data.controller.js';
 
 export { dataController };

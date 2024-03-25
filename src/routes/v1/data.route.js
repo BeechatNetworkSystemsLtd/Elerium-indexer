@@ -3,12 +3,16 @@ import { dataController } from '../../controllers/index';
 
 const router = express.Router();
 
-router.get('/getAll', dataController.getDatas);
+router.get('/createdb', dataController.createData);
 
-router.get('/:id', dataController.getData);
+router.get('/getAll', dataController.getAll);
 
-router.post('/', dataController.createData);
+router.get('/:hashedKey', dataController.getData);
+
+router.post('/', dataController.addData);
 
 router.put('/', dataController.updateData);
+
+router.delete('/:hashedKey', dataController.deleteData);
 
 export default router;

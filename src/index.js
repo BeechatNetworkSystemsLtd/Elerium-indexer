@@ -1,6 +1,12 @@
 import app from './app';
 import config from './config/config';
 import logger from './config/logger';
+import { dataModel } from './models/index';
+
+await dataModel
+  .create()
+  .then((db) => console.log('db', db))
+  .catch((err) => console.log('err', err));
 
 let server;
 

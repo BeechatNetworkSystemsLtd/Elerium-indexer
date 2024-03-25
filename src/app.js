@@ -12,7 +12,6 @@ import { authLimiter } from './middlewares/rateLimiter';
 import routes from './routes/v1/index';
 import { errorConverter, errorHandler } from './middlewares/error';
 import ApiError from './utils/ApiError';
-import { dataModel } from './models/index';
 
 const app = express();
 
@@ -62,7 +61,5 @@ app.use(errorConverter);
 
 // handle error
 app.use(errorHandler);
-
-dataModel.create();
 
 export default app;

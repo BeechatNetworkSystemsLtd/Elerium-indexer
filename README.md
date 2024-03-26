@@ -44,6 +44,9 @@ List of available routes:
 ```bash
 curl -X POST http://localhost:3000/v1/data \
 -H "Content-Type: application/json" \
+-H "publickey: artistOrOwnerPublicKey" \
+-H "challenge: challengeCode" \
+-H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
   "hashedKey": "5",
   "nftMetadata": {
@@ -74,6 +77,9 @@ curl http://localhost:3000/v1/data/5
 ```bash
 curl -X PUT http://localhost:3000/v1/data \
 -H "Content-Type: application/json" \
+-H "publickey: artistOrOwnerPublicKey" \
+-H "challenge: challengeCode" \
+-H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
   "hashedKey": "5",
   "nftMetadata": {
@@ -90,5 +96,8 @@ curl -X PUT http://localhost:3000/v1/data \
 - `DELETE /v1/data/:hashedKey` - delete a data
 
 ```bash
-curl -X DELETE http://localhost:3000/v1/data/5
+curl -X DELETE http://localhost:3000/v1/data/5 \
+-H "publickey: artistOrOwnerPublicKey" \
+-H "challenge: challengeCode" \
+-H "signature: signatureValidatingOwnershipOrAuthorization"
 ```

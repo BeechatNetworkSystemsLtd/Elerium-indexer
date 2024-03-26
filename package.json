@@ -39,9 +39,13 @@
     "passport",
     "joi",
     "eslint",
-    "prettier"
+    "prettier",
+    "lib-dqx",
+    "OrbitDB",
+    "IPFS"
   ],
   "dependencies": {
+    "@beechatnetwork/lib-dqx": "^0.0.8",
     "@chainsafe/libp2p-gossipsub": "^13.0.0",
     "@orbitdb/core": "^2.1.0",
     "bcryptjs": "^2.4.3",
@@ -62,6 +66,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "pm2": "^5.1.0",
+    "react-native-nfc-manager": "^3.14.13",
     "swagger-jsdoc": "^6.0.8",
     "swagger-ui-express": "^4.1.6",
     "validator": "^13.0.0",

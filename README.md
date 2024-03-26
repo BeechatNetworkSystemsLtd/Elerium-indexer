@@ -1,5 +1,36 @@
 # Decentralised Indexer with OrbitDB and Node.js
 
+## Manual Installation
+
+If you would still prefer to do the installation manually, follow these steps:
+
+Clone the repo:
+
+```bash
+git clone https://github.com/BeechatNetworkSystemsLtd/Elerium-indexer.git
+cd Elerium-indexer
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Set the environment variables:
+
+```bash
+cp .env.example .env
+
+# open .env and modify the environment variables (if needed)
+```
+
+Running locally:
+
+```bash
+npm run dev
+```
+
 ## API Documentation
 
 ### API Endpoints

@@ -2,12 +2,18 @@ import app from './app.js';
 import config from './config/config.js';
 import logger from './config/logger.js';
 import { dataModel } from './models/index.js';
+import DB from './models/db.js';
+import OrbitDB from './models/orbitdb.js';
+import Ipfs from './models/ipfs.js';
 
 await dataModel
   .create()
   .then((db) => console.log('db', db))
   .catch((err) => console.log('err', err));
 
+let db = DB.getDb();
+let orbitdb = OrbitDB.getOrbitDB();
+let ipfs = Ipfs.getIpfs();
 let server;
 
 server = app.listen(config.port, () => {
@@ -33,9 +39,15 @@ const unexpectedErrorHandler = (error) => {
 process.on('uncaughtException', unexpectedErrorHandler);
 process.on('unhandledRejection', unexpectedErrorHandler);
 
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async () => {
   logger.info('SIGTERM received');
+
+  await db.close();
+  await orbitdb.stop();
+  await ipfs.stop();
+
   if (server) {
     server.close();
   }
+  process.exit(0);
 });

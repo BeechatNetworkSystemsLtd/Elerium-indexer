@@ -45,10 +45,9 @@ List of available routes:
 curl -X POST http://localhost:3000/v1/data \
 -H "Content-Type: application/json" \
 -H "publickey: artistOrOwnerPublicKey" \
--H "challenge: challengeCode" \
 -H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
-  "hashedKey": "5",
+  "hashedKey": "hashedKey",
   "nftMetadata": {
     "id": "uniqueNFTIdentifier",
     "title": "Artwork Title",
@@ -60,16 +59,16 @@ curl -X POST http://localhost:3000/v1/data \
 }'
 ```
 
-- `GET /v1/data/getAll` - get all data\
+- `GET /v1/data/getDatas` - get all data\
 
 ```bash
-curl http://localhost:3000/v1/data/getAll
+curl http://localhost:3000/v1/data/getDatas
 ```
 
 - `GET /v1/data/:hashedKey` - get a data\
 
 ```bash
-curl http://localhost:3000/v1/data/5
+curl http://localhost:3000/v1/data/hashedKey
 ```
 
 - `PUT /v1/data` - update a data\
@@ -78,10 +77,9 @@ curl http://localhost:3000/v1/data/5
 curl -X PUT http://localhost:3000/v1/data \
 -H "Content-Type: application/json" \
 -H "publickey: artistOrOwnerPublicKey" \
--H "challenge: challengeCode" \
 -H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
-  "hashedKey": "5",
+  "hashedKey": "hashedKey",
   "nftMetadata": {
     "id": "New uniqueNFTIdentifier",
     "title": "New Artwork Title",
@@ -96,8 +94,7 @@ curl -X PUT http://localhost:3000/v1/data \
 - `DELETE /v1/data/:hashedKey` - delete a data
 
 ```bash
-curl -X DELETE http://localhost:3000/v1/data/5 \
+curl -X DELETE http://localhost:3000/v1/data/hashedKey \
 -H "publickey: artistOrOwnerPublicKey" \
--H "challenge: challengeCode" \
 -H "signature: signatureValidatingOwnershipOrAuthorization"
 ```

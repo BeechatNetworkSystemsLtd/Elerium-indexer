@@ -8,16 +8,27 @@ const auth =
     // console.log('req.headers', req.headers.signature, '==\n\n', req.headers.publickey, '==\n\n', req.headers.challenge);
     return new Promise((resolve, reject) => {
       // passport.authenticate('jwt', { session: false }, verifyCallback(req, resolve, reject, requiredRights))(req, res, next);
-      if (!req.headers.signature || !req.headers.publickey || !req.headers.challenge) {
-        return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate'));
+
+      if (!req.headers.signature) {
+        return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include signature code'));
       }
-      const { publickey, challenge, signature } = req.headers;
+      if (!req.headers.publickey) {
+        return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include public Key'));
+      }
+      // if (!req.headers.challenge) {
+      //   return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include challenge code'));
+      // }
+
+      const { publickey, signature } = req.headers;
+      let hashedKey;
+      if (req.method === 'POST') hashedKey = req.body.hashedKey;
+      else hashedKey = req.params.hashedKey;
 
       let b_publicKey = Buffer.from(publickey, 'hex');
-      let b_challenge = Buffer.from(challenge, 'hex');
+      let b_hashedKey = Buffer.from(hashedKey, 'hex');
       let b_signature = Buffer.from(signature, 'hex');
 
-      dilithiumVerifySig({ publicKey: b_publicKey, challenge: b_challenge, signature: b_signature })
+      dilithiumVerifySig({ publicKey: b_publicKey, challenge: b_hashedKey, signature: b_signature })
         .then((res) => {
           if (res) resolve();
           else reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden'));

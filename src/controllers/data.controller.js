@@ -30,9 +30,9 @@ const getData = catchAsync(async (req, res) => {
 const getAll = catchAsync(async (req, res) => {
   let db = DB.getDb();
 
-  for await (const record of db.iterator()) {
-    console.log(record);
-  }
+  // for await (const record of db.iterator()) {
+  //   console.log(record);
+  // }
 
   const data = await db.all();
 

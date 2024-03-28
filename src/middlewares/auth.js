@@ -21,8 +21,8 @@ const auth =
 
       const { publickey, signature } = req.headers;
       let hashedKey;
-      if (req.method === 'POST') hashedKey = req.body.hashedKey;
-      else hashedKey = req.params.hashedKey;
+      if (req.method === 'DELETE') hashedKey = req.params.hashedKey;
+      else hashedKey = req.body.hashedKey;
 
       let b_publicKey = Buffer.from(publickey, 'hex');
       let b_hashedKey = Buffer.from(hashedKey, 'hex');

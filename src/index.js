@@ -14,6 +14,21 @@ await dataModel
 let db = DB.getDb();
 let orbitdb = OrbitDB.getOrbitDB();
 let ipfs = Ipfs.getIpfs();
+
+// Listen for the connection of ipfs1 to ipfs2.
+// If we want to listen for connections from ipfs2 to ipfs1, add a "join"
+// listener to db1.
+db.events.on('join', async (peerId, heads) => {
+  // The peerId of the ipfs1 node.
+  console.log(peerId);
+});
+
+// Listen for any updates to db2.
+// If we want to listen for new data on db2, add an "update" listener to db1.
+db.events.on('update', async (entry) => {
+  console.log('update =', entry.payload);
+});
+
 let server;
 
 server = app.listen(config.port, () => {

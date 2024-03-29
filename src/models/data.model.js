@@ -7,21 +7,24 @@ import DB from './db.js';
 import Ipfs from './ipfs.js';
 import OrbitDB from './orbitdb.js';
 import config from '../config/config.js';
-import logger from '../config/logger.js';
 
-const create = async () => {
+const createIpfs = async () => {
   // Create an IPFS instance.
   const blockstore = new LevelBlockstore('./_ipfs');
   const libp2p = await createLibp2p(Libp2pOptions);
-  const ipfs = await createHelia({ libp2p, blockstore });
+  return createHelia({ libp2p, blockstore });
+};
 
+const init = async () => {
+  const ipfs = await createIpfs();
   const orbitdb = await createOrbitDB({ ipfs, directory: `./_orbitdb` });
+  let db;
 
-  const db = await orbitdb.open(config.OrbitDB.url);
-  // const db = await orbitdb.open('my-db', { type: 'keyvalue', AccessController: IPFSAccessController({ write: ['*'] }) });
+  if (config.OrbitDB.isNew)
+    db = await orbitdb.open('my-db', { type: 'keyvalue', AccessController: IPFSAccessController({ write: ['*'] }) });
+  else db = await orbitdb.open(config.OrbitDB.url);
 
-  logger.info(`OrbitDB : ${db.address}`);
-
+  // logger.info(`OrbitDB : ${db.address}`);
   await DB.setDb(db);
   await Ipfs.setIpfs(ipfs);
   await OrbitDB.setOrbitDB(orbitdb);
@@ -30,5 +33,5 @@ const create = async () => {
 };
 
 export default {
-  create,
+  init,
 };

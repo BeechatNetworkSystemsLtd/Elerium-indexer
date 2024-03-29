@@ -6,8 +6,8 @@ import DB from '../models/db.js';
 import { Buffer } from 'buffer/index.js';
 import { dilithiumGenKeyPair, dilithiumSign, dilithiumVerifySig } from '@beechatnetwork/lib-dqx';
 
-const createData = catchAsync(async (req, res) => {
-  const dbName = await dataModel.create();
+const initDb = catchAsync(async (req, res) => {
+  const dbName = await dataModel.init();
   res.status(httpStatus.OK).send({ dbName });
 });
 
@@ -93,7 +93,7 @@ const do_dilithiumVerifySig = catchAsync(async (req, res) => {
 });
 
 export default {
-  createData,
+  initDb,
   addData,
   getAll,
   getData,

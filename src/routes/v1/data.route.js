@@ -6,7 +6,7 @@ import auth from '../../middlewares/auth.js';
 const router = express.Router();
 
 // OrbitDB apis
-router.get('/createdb', dataController.createData);
+router.get('/initdb', dataController.initDb);
 
 router.get('/getDatas', validate(dataValidation.getDatas), dataController.getAll);
 

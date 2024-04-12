@@ -19,7 +19,7 @@ let ipfs = Ipfs.getIpfs();
 
 // Listen for the connection of ipfs1 to ipfs2.
 db.events.on('join', async (peerId, heads) => {
-  console.log(peerId);
+  console.log('peerId', peerId);
 });
 
 // Listen for any updates to db2.

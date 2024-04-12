@@ -45,6 +45,7 @@ List of available routes:
 curl -X POST http://localhost:3000/v1/data \
 -H "Content-Type: application/json" \
 -H "publickey: artistOrOwnerPublicKey" \
+-H "challenge: challenge code" \
 -H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
   "hashedKey": "hashedKey",

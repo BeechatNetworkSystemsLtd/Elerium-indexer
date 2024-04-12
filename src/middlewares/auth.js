@@ -1,13 +1,13 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { dilithiumVerifySig } from '@beechatnetwork/lib-dqx';
+import { sha256 } from 'js-sha256';
 
 const auth =
   (...requiredRights) =>
   async (req, res, next) => {
-    // console.log('req.headers', req.headers.signature, '==\n\n', req.headers.publickey, '==\n\n', req.headers.challenge);
-    return new Promise((resolve, reject) => {
-      // passport.authenticate('jwt', { session: false }, verifyCallback(req, resolve, reject, requiredRights))(req, res, next);
+    return new Promise(async (resolve, reject) => {
+      // check header parameters
 
       if (!req.headers.signature) {
         return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include signature code'));
@@ -15,25 +15,35 @@ const auth =
       if (!req.headers.publickey) {
         return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include public Key'));
       }
-      // if (!req.headers.challenge) {
-      //   return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include challenge code'));
-      // }
+      if (!req.headers.challenge) {
+        return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include challenge code'));
+      }
 
-      const { publickey, signature } = req.headers;
-      let hashedKey;
-      if (req.method === 'DELETE') hashedKey = req.params.hashedKey;
-      else hashedKey = req.body.hashedKey;
+      // veirfy signature
+
+      const { publickey, signature, challenge } = req.headers;
 
       let b_publicKey = Buffer.from(publickey, 'hex');
-      let b_hashedKey = Buffer.from(hashedKey, 'hex');
+      let b_challenge = Buffer.from(challenge, 'hex');
       let b_signature = Buffer.from(signature, 'hex');
 
-      dilithiumVerifySig({ publicKey: b_publicKey, challenge: b_hashedKey, signature: b_signature })
-        .then((res) => {
-          if (res) resolve();
-          else reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden'));
-        })
-        .catch((err) => reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden')));
+      const isVerifiedSignature = await dilithiumVerifySig({
+        publicKey: b_publicKey,
+        challenge: b_challenge,
+        signature: b_signature,
+      });
+      if (!isVerifiedSignature) {
+        reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid signature'));
+      }
+
+      // verify the hashKey
+
+      const { hashedKey, nftMetadata } = req.body;
+
+      const isVerifiedHash = sha256(signature + nftMetadata.toString()) === hashedKey;
+
+      if (isVerifiedHash) resolve();
+      else reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid hashkey'));
     })
       .then(() => next())
       .catch((err) => next(err));

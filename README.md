@@ -1,5 +1,9 @@
 # Decentralised Indexer with OrbitDB and Node.js
 
+## Support 
+
+Fell free to contact me on **clever.fox.w@gmail.com**
+
 ## Manual Installation
 
 If you would still prefer to do the installation manually, follow these steps:

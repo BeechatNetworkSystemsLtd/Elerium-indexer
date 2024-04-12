@@ -1,6 +1,6 @@
 # Decentralised Indexer with OrbitDB and Node.js
 
-## Support 
+## Support
 
 Fell free to contact me on **clever.fox.w@gmail.com**
 
@@ -82,6 +82,7 @@ curl http://localhost:3000/v1/data/hashedKey
 curl -X PUT http://localhost:3000/v1/data \
 -H "Content-Type: application/json" \
 -H "publickey: artistOrOwnerPublicKey" \
+-H "challenge: challenge code" \
 -H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
   "hashedKey": "hashedKey",

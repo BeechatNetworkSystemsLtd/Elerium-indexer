@@ -32,18 +32,22 @@ const auth =
         challenge: b_challenge,
         signature: b_signature,
       });
+
       if (!isVerifiedSignature) {
         reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid signature'));
       }
 
       // verify the hashKey
 
-      const { hashedKey, nftMetadata } = req.body;
+      if (req.method !== 'DELETE') {
+        const { hashedKey, nftMetadata } = req.body;
 
-      const isVerifiedHash = sha256(signature + nftMetadata.toString()) === hashedKey;
+        const isVerifiedHash = sha256(signature + nftMetadata.toString()) === hashedKey;
 
-      if (isVerifiedHash) resolve();
-      else reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid hashkey'));
+        if (!isVerifiedHash) reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid hashkey'));
+      }
+
+      resolve();
     })
       .then(() => next())
       .catch((err) => next(err));

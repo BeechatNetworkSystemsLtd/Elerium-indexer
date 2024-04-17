@@ -18,13 +18,14 @@ const createIpfs = async () => {
 const init = async () => {
   const ipfs = await createIpfs();
   const orbitdb = await createOrbitDB({ ipfs, directory: `./_orbitdb` });
-  let db;
-
-  if (config.OrbitDB.isNew)
-    db = await orbitdb.open('my-db', { type: 'keyvalue', AccessController: IPFSAccessController({ write: ['*'] }) });
-  else db = await orbitdb.open(config.OrbitDB.url);
-
+  // console.log('orbitdb :>> ', orbitdb);
+  let db = await orbitdb
+    .open(config.OrbitDB.url)
+    .then((res) => res)
+    .catch((err) => false);
+  if (!db) db = await orbitdb.open('my-db', { type: 'keyvalue', AccessController: IPFSAccessController({ write: ['*'] }) });
   // logger.info(`OrbitDB : ${db.address}`);
+  // console.log('db.address :>> ', db.address);
   await DB.setDb(db);
   await Ipfs.setIpfs(ipfs);
   await OrbitDB.setOrbitDB(orbitdb);

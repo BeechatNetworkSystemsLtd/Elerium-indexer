@@ -14,9 +14,13 @@ const initDb = catchAsync(async (req, res) => {
 const addData = catchAsync(async (req, res) => {
   let db = DB.getDb();
 
-  const result = await db.put(req.body.hashedKey, req.body.nftMetadata);
+  const data = await db.get(req.body.hashedKey);
+  if (data) res.status(httpStatus.CONFLICT).send({ hash: 'Already exist' });
+  else {
+    const result = await db.put(req.body.hashedKey, req.body.nftMetadata);
 
-  res.status(httpStatus.OK).send({ hash: result });
+    res.status(httpStatus.OK).send({ hash: result });
+  }
 });
 
 const getData = catchAsync(async (req, res) => {

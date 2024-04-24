@@ -42,8 +42,7 @@ const auth =
       if (req.method !== 'DELETE') {
         const { hashedKey, nftMetadata } = req.body;
 
-        const isVerifiedHash = sha256(signature + nftMetadata.toString()) === hashedKey;
-
+        const isVerifiedHash = sha256(signature + JSON.stringify(nftMetadata)) === hashedKey;
         if (!isVerifiedHash) reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid hashkey'));
       }
 

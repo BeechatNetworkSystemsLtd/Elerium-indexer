@@ -20,6 +20,7 @@ const envVarsSchema = Joi.object()
     JWT_VERIFY_EMAIL_EXPIRATION_MINUTES: Joi.number()
       .default(10)
       .description('minutes after which verify email token expires'),
+    BOOTSTRAP_ADDRESS: Joi.string().description('ipfs BOOTSTRAP node list'),
     ORBITDB_URL: Joi.string().description('OrbigDB URL'),
     IS_NEW_DB: Joi.boolean().required(),
   })
@@ -42,6 +43,7 @@ export default {
     verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
   },
   OrbitDB: {
+    bootstrap_list: envVars.BOOTSTRAP_ADDRESS,
     url: envVars.ORBITDB_URL,
     isNew: envVars.IS_NEW_DB,
   },

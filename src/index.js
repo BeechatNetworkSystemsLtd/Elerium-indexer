@@ -22,11 +22,6 @@ db.events.on('join', async (peerId, heads) => {
   console.log('peerId', peerId);
 });
 
-// Listen for any updates to db2.
-db.events.on('update', async (entry) => {
-  console.log('update =', entry.payload);
-});
-
 let server;
 
 server = app.listen(config.port, () => {

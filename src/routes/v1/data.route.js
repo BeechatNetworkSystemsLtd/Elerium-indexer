@@ -16,7 +16,7 @@ router.post('/', auth(), validate(dataValidation.addData), dataController.addDat
 
 router.put('/', auth(), validate(dataValidation.updateData), dataController.updateData);
 
-router.delete('/:hashedKey', validate(dataValidation.deleteData), dataController.deleteData);
+router.delete('/:hashedKey', auth(), validate(dataValidation.deleteData), dataController.deleteData);
 
 // NFC apis
 router.get('/nfc/dilithiumGenKeyPair', dataController.do_dilithiumGenKeyPair);

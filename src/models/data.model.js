@@ -12,6 +12,9 @@ const createIpfs = async () => {
   // Create an IPFS instance.
   const blockstore = new LevelBlockstore('./_ipfs');
   const libp2p = await createLibp2p(Libp2pOptions);
+
+  libp2p.getMultiaddrs().forEach((ma) => console.log(ma.toString()));
+
   return createHelia({ libp2p, blockstore });
 };
 

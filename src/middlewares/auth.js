@@ -1,7 +1,6 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { dilithiumVerifySig } from '@beechatnetwork/lib-dqx';
-import { sha256 } from 'js-sha256';
 
 const auth =
   (...requiredRights) =>
@@ -39,12 +38,12 @@ const auth =
 
       // verify the hashKey
 
-      if (req.method !== 'DELETE') {
-        const { hashedKey, nftMetadata } = req.body;
+      // if (req.method !== 'DELETE') {
+      //   const { hashedKey, metadata } = req.body;
 
-        const isVerifiedHash = sha256(signature + JSON.stringify(nftMetadata)) === hashedKey;
-        if (!isVerifiedHash) reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid hashkey'));
-      }
+      //   const isVerifiedHash = sha256(signature + JSON.stringify(metadata)) === hashedKey;
+      //   if (!isVerifiedHash) reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid hashkey'));
+      // }
 
       resolve();
     })

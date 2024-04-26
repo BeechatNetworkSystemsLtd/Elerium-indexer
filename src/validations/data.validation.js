@@ -2,8 +2,7 @@ import Joi from 'joi';
 
 const addData = {
   body: Joi.object().keys({
-    hashedKey: Joi.string().required(),
-    nftMetadata: Joi.object().required(),
+    metadata: Joi.object().required(),
   }),
 };
 
@@ -26,7 +25,7 @@ const updateData = {
   body: Joi.object()
     .keys({
       hashedKey: Joi.string().required(),
-      nftMetadata: Joi.object().required(),
+      metadata: Joi.object().required(),
     })
     .min(1),
 };

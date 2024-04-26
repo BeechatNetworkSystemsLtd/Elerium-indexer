@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import catchAsync from '../utils/catchAsync.js';
 import { dataModel } from '../models/index.js';
 import DB from '../models/db.js';
+import { sha256 } from 'js-sha256';
 
 import { Buffer } from 'buffer/index.js';
 import { dilithiumGenKeyPair, dilithiumSign, dilithiumVerifySig } from '@beechatnetwork/lib-dqx';
@@ -14,10 +15,15 @@ const initDb = catchAsync(async (req, res) => {
 const addData = catchAsync(async (req, res) => {
   let db = DB.getDb();
 
-  const data = await db.get(req.body.hashedKey);
+  const { metadata } = req.body;
+  const { signature } = req.headers;
+
+  const hashedKey = sha256(signature + JSON.stringify(metadata));
+
+  const data = await db.get(hashedKey);
   if (data) res.status(httpStatus.CONFLICT).send({ hash: 'Already exist' });
   else {
-    const result = await db.put(req.body.hashedKey, req.body.nftMetadata);
+    const result = await db.put(hashedKey, metadata);
 
     res.status(httpStatus.OK).send({ hash: result });
   }
@@ -25,8 +31,9 @@ const addData = catchAsync(async (req, res) => {
 
 const getData = catchAsync(async (req, res) => {
   let db = DB.getDb();
+  const { hashedKey } = req.params;
 
-  const data = await db.get(req.params.hashedKey);
+  const data = await db.get(hashedKey);
 
   res.status(httpStatus.OK).send({ data });
 });
@@ -45,16 +52,19 @@ const getAll = catchAsync(async (req, res) => {
 
 const updateData = catchAsync(async (req, res) => {
   let db = DB.getDb();
+  const { metadata } = req.body;
+  const { hashedKey } = req.params;
 
-  const result = await db.put(req.body.hashedKey, req.body.nftMetadata);
+  const result = await db.put(hashedKey, metadata);
 
   res.status(httpStatus.OK).send({ message: 'Successfully updated' });
 });
 
 const deleteData = catchAsync(async (req, res) => {
   let db = DB.getDb();
+  const { hashedKey } = req.params;
 
-  const data = await db.del(req.params.hashedKey);
+  const data = await db.del(hashedKey);
 
   res.status(httpStatus.OK).send({ result: 'Successfully deleted' });
 });

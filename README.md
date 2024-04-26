@@ -53,7 +53,7 @@ curl -X POST http://localhost:3000/v1/data \
 -H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
   "hashedKey": "hashedKey",
-  "nftMetadata": {
+  "metadata": {
     "id": "uniqueNFTIdentifier",
     "title": "Artwork Title",
     "description": "Description of the artwork",
@@ -86,7 +86,7 @@ curl -X PUT http://localhost:3000/v1/data \
 -H "signature: signatureValidatingOwnershipOrAuthorization" \
 -d '{
   "hashedKey": "hashedKey",
-  "nftMetadata": {
+  "metadata": {
     "id": "New uniqueNFTIdentifier",
     "title": "New Artwork Title",
     "description": "New Description of the artwork",

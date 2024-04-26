@@ -15,8 +15,6 @@ export const Libp2pOptions = {
       list: bootstrapMultiaddrs,
       timeout: 1000, // in ms,
       tagName: 'bootstrap',
-      tagValue: 50,
-      tagTTL: 120000, // in ms
     }),
   ],
   addresses: {

@@ -43,18 +43,19 @@ List of available routes:
 
 **Data routes**:
 
-- `POST /v1/data` - create a user\
+- `POST /v1/data` - create a data\
 
 ```bash
 curl -X POST http://localhost:3000/v1/data \
 -H "Content-Type: application/json" \
--H "publickey: artistOrOwnerPublicKey" \
--H "challenge: challenge code" \
--H "signature: signatureValidatingOwnershipOrAuthorization" \
+-H "publickey: PublicKey" \
+-H "challenge: hash(metadata2)" \
+-H "signature: signature(hash(metadata2))" \
 -d '{
-  "hashedKey": "hashedKey",
-  "metadata": {
+  "metadata1" : {
     "id": "uniqueNFTIdentifier",
+  },
+  "metadata2": {
     "title": "Artwork Title",
     "description": "Description of the artwork",
     "image": "urlToNFTImage",
@@ -76,18 +77,16 @@ curl http://localhost:3000/v1/data/getDatas
 curl http://localhost:3000/v1/data/hashedKey
 ```
 
-- `PUT /v1/data` - update a data\
+- `PUT /v1/data/:hashedKey` - update a data\
 
 ```bash
-curl -X PUT http://localhost:3000/v1/data \
+curl -X PUT http://localhost:3000/v1/data/hashedKey \
 -H "Content-Type: application/json" \
--H "publickey: artistOrOwnerPublicKey" \
--H "challenge: challenge code" \
--H "signature: signatureValidatingOwnershipOrAuthorization" \
+-H "publickey: PublicKey" \
+-H "challenge: hash(metadata2)" \
+-H "signature: signature(hash(metadata2))" \
 -d '{
-  "hashedKey": "hashedKey",
-  "metadata": {
-    "id": "New uniqueNFTIdentifier",
+  "metadata2": {
     "title": "New Artwork Title",
     "description": "New Description of the artwork",
     "image": "New urlToNFTImage",

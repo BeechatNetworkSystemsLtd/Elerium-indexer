@@ -15,14 +15,13 @@ const initDb = catchAsync(async (req, res) => {
 const addData = catchAsync(async (req, res) => {
   let db = DB.getDb();
 
-  const { metadata } = req.body;
-  const { signature } = req.headers;
+  const { metadata1, metadata2 } = req.body;
 
-  const hashedKey = sha256(signature + JSON.stringify(metadata));
+  const hashedKey = sha256(JSON.stringify(metadata1));
   const data = await db.get(hashedKey);
   if (data) res.status(httpStatus.CONFLICT).send({ hash: 'Already exist' });
   else {
-    const result = await db.put(hashedKey, metadata);
+    const result = await db.put(hashedKey, metadata2);
 
     res.status(httpStatus.OK).send({ hash: result });
   }
@@ -32,7 +31,7 @@ const getData = catchAsync(async (req, res) => {
   let db = DB.getDb();
   const { hashedKey } = req.params;
   const data = await db.get(hashedKey);
-  res.status(httpStatus.OK).send({ data });
+  res.status(httpStatus.OK).send(data);
 });
 
 const getAll = catchAsync(async (req, res) => {
@@ -49,10 +48,10 @@ const getAll = catchAsync(async (req, res) => {
 
 const updateData = catchAsync(async (req, res) => {
   let db = DB.getDb();
-  const { metadata } = req.body;
+  const { metadata2 } = req.body;
   const { hashedKey } = req.params;
 
-  const result = await db.put(hashedKey, metadata);
+  const result = await db.put(hashedKey, metadata2);
 
   res.status(httpStatus.OK).send({ message: 'Successfully updated' });
 });

@@ -14,7 +14,7 @@ router.get('/:hashedKey', validate(dataValidation.getData), dataController.getDa
 
 router.post('/', auth(), validate(dataValidation.addData), dataController.addData);
 
-router.put('/', auth(), validate(dataValidation.updateData), dataController.updateData);
+router.put('/:hashedKey', auth(), validate(dataValidation.updateData), dataController.updateData);
 
 router.delete('/:hashedKey', auth(), validate(dataValidation.deleteData), dataController.deleteData);
 

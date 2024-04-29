@@ -6,18 +6,6 @@ const auth =
   (...requiredRights) =>
   async (req, res, next) => {
     return new Promise(async (resolve, reject) => {
-      // check header parameters
-
-      if (!req.headers.signature) {
-        return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include signature code'));
-      }
-      if (!req.headers.publickey) {
-        return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include public Key'));
-      }
-      if (!req.headers.challenge) {
-        return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please include challenge code'));
-      }
-
       // veirfy signature
 
       const { publickey, signature, challenge } = req.headers;

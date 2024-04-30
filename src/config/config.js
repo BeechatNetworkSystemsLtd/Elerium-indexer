@@ -23,6 +23,7 @@ const envVarsSchema = Joi.object()
     BOOTSTRAP_ADDRESS: Joi.string().description('ipfs BOOTSTRAP node list'),
     ORBITDB_URL: Joi.string().description('OrbigDB URL'),
     IS_NEW_DB: Joi.boolean().required(),
+    LISTEN_PORT: Joi.number().description('bootstrap server listening port'),
   })
   .unknown();
 
@@ -46,5 +47,6 @@ export default {
     bootstrap_list: envVars.BOOTSTRAP_ADDRESS,
     url: envVars.ORBITDB_URL,
     isNew: envVars.IS_NEW_DB,
+    listenPort: envVars.LISTEN_PORT,
   },
 };

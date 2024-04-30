@@ -18,7 +18,7 @@ export const Libp2pOptions = {
     }),
   ],
   addresses: {
-    listen: ['/ip4/0.0.0.0/tcp/0'],
+    listen: [`/ip4/0.0.0.0/tcp/${config.OrbitDB.listenPort}`],
   },
   transports: [tcp()],
   connectionEncryption: [noise()],

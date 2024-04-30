@@ -7,7 +7,7 @@ const addData = {
     challenge: Joi.string().required(),
   }),
   body: Joi.object().keys({
-    metadata1: Joi.object().required(),
+    metadata1: Joi.string().required(),
     metadata2: Joi.object().required(),
   }),
 };

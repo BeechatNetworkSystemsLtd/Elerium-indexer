@@ -17,7 +17,7 @@ const addData = catchAsync(async (req, res) => {
 
   const { metadata1, metadata2 } = req.body;
 
-  const hashedKey = sha256(JSON.stringify(metadata1));
+  const hashedKey = sha256(metadata1);
   const data = await db.get(hashedKey);
   if (data) res.status(httpStatus.CONFLICT).send({ hash: 'Already exist' });
   else {
@@ -31,7 +31,8 @@ const getData = catchAsync(async (req, res) => {
   let db = DB.getDb();
   const { hashedKey } = req.params;
   const data = await db.get(hashedKey);
-  res.status(httpStatus.OK).send(data);
+  if (data) res.status(httpStatus.OK).send({ data });
+  res.status(httpStatus.OK).send();
 });
 
 const getAll = catchAsync(async (req, res) => {

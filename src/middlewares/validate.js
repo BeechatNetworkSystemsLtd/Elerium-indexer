@@ -4,8 +4,9 @@ import pick from '../utils/pick.js';
 import ApiError from '../utils/ApiError.js';
 
 const validate = (schema) => (req, res, next) => {
-  const validSchema = pick(schema, ['params', 'query', 'body']);
+  const validSchema = pick(schema, ['headers', 'params', 'query', 'body']);
   const object = pick(req, Object.keys(validSchema));
+
   const { value, error } = Joi.compile(validSchema)
     .prefs({ errors: { label: 'key' }, abortEarly: false })
     .validate(object);

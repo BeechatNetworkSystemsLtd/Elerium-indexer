@@ -12,11 +12,11 @@ router.get('/getDatas', validate(dataValidation.getDatas), dataController.getAll
 
 router.get('/:hashedKey', validate(dataValidation.getData), dataController.getData);
 
-router.post('/', auth(), validate(dataValidation.addData), dataController.addData);
+router.post('/', validate(dataValidation.addData), auth(), dataController.addData);
 
-router.put('/:hashedKey', auth(), validate(dataValidation.updateData), dataController.updateData);
+router.put('/:hashedKey', validate(dataValidation.updateData), auth(), dataController.updateData);
 
-router.delete('/:hashedKey', auth(), validate(dataValidation.deleteData), dataController.deleteData);
+router.delete('/:hashedKey', validate(dataValidation.deleteData), auth(), dataController.deleteData);
 
 // NFC apis
 router.get('/nfc/dilithiumGenKeyPair', dataController.do_dilithiumGenKeyPair);

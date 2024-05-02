@@ -35,7 +35,13 @@ const getData = catchAsync(async (req, res) => {
   const data = await db.get(hashedKey);
 
   if (data === undefined) res.status(httpStatus.OK).send();
-  else res.status(httpStatus.OK).send({ data });
+  else
+    res.status(httpStatus.OK).send({
+      data: {
+        hashedKey: hashedKey,
+        metadata2: data,
+      },
+    });
 });
 
 const getAll = catchAsync(async (req, res) => {
@@ -64,9 +70,14 @@ const deleteData = catchAsync(async (req, res) => {
   let db = DB.getDb();
   const { hashedKey } = req.params;
 
-  const data = await db.del(hashedKey);
-
-  res.status(httpStatus.OK).send({ result: 'Successfully deleted' });
+  const data = await db.get(hashedKey);
+  if (data === undefined) {
+    res.status(httpStatus.OK).send({ result: 'Not exist' });
+    return;
+  } else {
+    const data = await db.del(hashedKey);
+    res.status(httpStatus.OK).send({ result: 'Successfully deleted' });
+  }
 });
 
 // APIs related NFC key

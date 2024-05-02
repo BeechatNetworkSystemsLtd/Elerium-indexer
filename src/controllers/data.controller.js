@@ -17,22 +17,25 @@ const addData = catchAsync(async (req, res) => {
 
   const { metadata1, metadata2 } = req.body;
 
-  const hashedKey = sha256(metadata1);
-  const data = await db.get(hashedKey);
-  if (data) res.status(httpStatus.CONFLICT).send({ hash: 'Already exist' });
-  else {
-    const result = await db.put(hashedKey, metadata2);
+  const hashedKey = sha256(Buffer.from(metadata1, 'hex'));
 
+  const data = await db.get(hashedKey);
+  if (data === undefined) {
+    const result = await db.put(hashedKey, metadata2);
     res.status(httpStatus.OK).send({ hash: result });
+  } else {
+    res.status(httpStatus.CONFLICT).send();
   }
 });
 
 const getData = catchAsync(async (req, res) => {
   let db = DB.getDb();
   const { hashedKey } = req.params;
+
   const data = await db.get(hashedKey);
-  if (data) res.status(httpStatus.OK).send({ data });
-  res.status(httpStatus.OK).send();
+
+  if (data === undefined) res.status(httpStatus.OK).send();
+  else res.status(httpStatus.OK).send({ data });
 });
 
 const getAll = catchAsync(async (req, res) => {

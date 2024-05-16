@@ -41,7 +41,7 @@ const exitHandler = () => {
 
 const unexpectedErrorHandler = (error) => {
   logger.error(error);
-  exitHandler();
+  // exitHandler();
 };
 
 process.on('uncaughtException', unexpectedErrorHandler);

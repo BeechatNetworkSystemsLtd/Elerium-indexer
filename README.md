@@ -1,8 +1,8 @@
 # Decentralised Indexer with OrbitDB and Node.js
 
-## Support
+## Requirements
 
-Fell free to contact me on **clever.fox.w@gmail.com**
+- Install Node.js which includes Node Package Manager
 
 ## Manual Installation
 
@@ -25,8 +25,32 @@ Set the environment variables:
 
 ```bash
 cp .env.example .env
+```
 
+- example
+```bash
 # open .env and modify the environment variables (if needed)
+
+# Port number
+PORT=
+
+# JWT
+# JWT secret key
+JWT_SECRET=
+# Number of minutes after which an access token expires
+JWT_ACCESS_EXPIRATION_MINUTES=
+# Number of days after which a refresh token expires
+JWT_REFRESH_EXPIRATION_DAYS=
+# Number of minutes after which a reset password token expires
+JWT_RESET_PASSWORD_EXPIRATION_MINUTES=
+# Number of minutes after which a verify email token expires
+JWT_VERIFY_EMAIL_EXPIRATION_MINUTES=
+
+#OrbitDB
+BOOTSTRAP_ADDRESS=
+ORBITDB_URL=
+IS_NEW_DB=
+LISTEN_PORT=
 ```
 
 Running locally:
@@ -52,9 +76,7 @@ curl -X POST http://localhost:3000/v1/data \
 -H "challenge: hash(metadata2)" \
 -H "signature: signature(hash(metadata2))" \
 -d '{
-  "metadata1" : {
-    "id": "uniqueNFTIdentifier",
-  },
+  "metadata1": "uniqueNFTIdentifier",
   "metadata2": {
     "title": "Artwork Title",
     "description": "Description of the artwork",
@@ -102,4 +124,9 @@ curl -X PUT http://localhost:3000/v1/data/hashedKey \
 curl -X DELETE http://localhost:3000/v1/data/hashedKey \
 -H "publickey: artistOrOwnerPublicKey" \
 -H "signature: signatureValidatingOwnershipOrAuthorization"
+-H "challenge: challengeCode" \
 ```
+
+## Support
+
+Fell free to contact me on **clever.fox.w@gmail.com**

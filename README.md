@@ -87,11 +87,6 @@ curl -X POST http://localhost:3000/v1/data \
 }'
 ```
 
-- `GET /v1/data/getDatas` - get all data\
-
-```bash
-curl http://localhost:3000/v1/data/getDatas
-```
 
 - `GET /v1/data/:hashedKey` - get a data\
 
@@ -127,6 +122,10 @@ curl -X DELETE http://localhost:3000/v1/data/hashedKey \
 -H "challenge: challengeCode" \
 ```
 
-## Support
+## License
 
-Fell free to contact me on **clever.fox.w@gmail.com**
+This project is licensed under the GNU Affero General Public License v3.0. See the [LICENSE](LICENSE) file for details.
+
+## Copyright Notice
+
+All rights reserved for Beechat Network Systems Ltd, a company in the UK. Copyright © 2024 Beechat Network Systems Ltd, Registered in England and Wales (reg.no. 12923057). Beechat®, is a registered trademark owned by Beechat Network Systems Ltd. All other trademarks, service marks, and company names are the property of their respective owners.

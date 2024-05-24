@@ -30,25 +30,21 @@ const auth =
         publicKey: b_publicKey,
         challenge: b_challenge,
         signature: b_signature,
-      });
+      })
+        .then((res) => res)
+        .catch((err) => reject(new ApiError(httpStatus.FORBIDDEN, err)));
 
       if (!isVerifiedSignature) {
         reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid signature'));
       }
 
-      // verify the hashKey
-
-      // if (req.method !== 'DELETE') {
-      //   const { hashedKey, metadata } = req.body;
-
-      //   const isVerifiedHash = sha256(signature + JSON.stringify(metadata)) === hashedKey;
-      //   if (!isVerifiedHash) reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden cause of invlid hashkey'));
-      // }
-
       resolve();
     })
       .then(() => next())
-      .catch((err) => next(err));
+      .catch((err) => {
+        console.log('err', err);
+        next(err);
+      });
   };
 
 export default auth;

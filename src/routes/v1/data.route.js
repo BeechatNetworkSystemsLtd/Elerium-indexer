@@ -8,7 +8,7 @@ const router = express.Router();
 // OrbitDB apis
 router.get('/initdb', dataController.initDb);
 
-router.get('/getDatas', validate(dataValidation.getDatas), dataController.getAll);
+router.get('/getList', validate(dataValidation.getList), dataController.getList);
 
 router.get('/:hashedKey', validate(dataValidation.getData), dataController.getData);
 

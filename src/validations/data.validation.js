@@ -12,12 +12,9 @@ const addData = {
   }),
 };
 
-const getDatas = {
+const getList = {
   query: Joi.object().keys({
-    hashedKey: Joi.string(),
-    sortBy: Joi.string(),
     limit: Joi.number().integer(),
-    page: Joi.number().integer(),
   }),
 };
 
@@ -54,4 +51,4 @@ const deleteData = {
   }),
 };
 
-export default { addData, getDatas, getData, updateData, deleteData };
+export default { addData, getList, getData, updateData, deleteData };

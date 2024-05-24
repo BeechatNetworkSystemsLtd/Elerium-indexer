@@ -28,6 +28,7 @@ cp .env.example .env
 ```
 
 - example
+
 ```bash
 # open .env and modify the environment variables (if needed)
 
@@ -125,6 +126,12 @@ curl -X DELETE http://localhost:3000/v1/data/hashedKey \
 -H "publickey: artistOrOwnerPublicKey" \
 -H "signature: signatureValidatingOwnershipOrAuthorization"
 -H "challenge: challengeCode" \
+```
+
+- `GET /v1/data/getList` - get hash list of data
+
+```bash
+curl -X GET http://localhost:3000/v1/data/getList
 ```
 
 ## Support

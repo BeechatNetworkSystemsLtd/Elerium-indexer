@@ -44,14 +44,20 @@ const getData = catchAsync(async (req, res) => {
     });
 });
 
-const getAll = catchAsync(async (req, res) => {
+const getList = catchAsync(async (req, res) => {
+  const { limit } = req.query;
   let db = DB.getDb();
 
-  // for await (const record of db.iterator()) {
-  //   console.log(record);
-  // }
+  let list = [];
+  for await (const record of db.iterator()) {
+    if (list.length > limit - 1) break;
+    list = [...list, record.key];
+  }
 
-  const data = await db.all();
+  const data = {
+    list,
+    count: list.length,
+  };
 
   res.status(httpStatus.OK).send({ data });
 });
@@ -120,7 +126,7 @@ const do_dilithiumVerifySig = catchAsync(async (req, res) => {
 export default {
   initDb,
   addData,
-  getAll,
+  getList,
   getData,
   updateData,
   deleteData,

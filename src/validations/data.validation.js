@@ -18,6 +18,15 @@ const getList = {
   }),
 };
 
+const getByPublicKey = {
+  query: Joi.object().keys({
+    limit: Joi.number().integer(),
+  }),
+  params: Joi.object().keys({
+    publickey: Joi.string().required(),
+  }),
+};
+
 const getData = {
   params: Joi.object().keys({
     hashedKey: Joi.string().required(),
@@ -51,4 +60,4 @@ const deleteData = {
   }),
 };
 
-export default { addData, getList, getData, updateData, deleteData };
+export default { addData, getList, getByPublicKey, getData, updateData, deleteData };

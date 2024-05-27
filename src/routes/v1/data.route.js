@@ -1,16 +1,20 @@
+// import modules
 import express from 'express';
 import { dataController } from '../../controllers/index.js';
 import validate from '../../middlewares/validate.js';
 import { dataValidation } from '../../validations/index.js';
 import auth from '../../middlewares/auth.js';
+
 const router = express.Router();
 
 // OrbitDB apis
 router.get('/initdb', dataController.initDb);
 
-router.get('/getList', validate(dataValidation.getList), dataController.getList);
+router.get('/getHashList', validate(dataValidation.getList), dataController.getList);
 
-router.get('/:hashedKey', validate(dataValidation.getData), dataController.getData);
+router.get('/getHashListByPublicKey/:publickey', validate(dataValidation.getByPublicKey), dataController.getByPublicKey);
+
+router.get('/getByHashedkey/:hashedKey', validate(dataValidation.getData), dataController.getData);
 
 router.post('/', validate(dataValidation.addData), auth(), dataController.addData);
 

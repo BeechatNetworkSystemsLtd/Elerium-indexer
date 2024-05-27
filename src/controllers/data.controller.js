@@ -16,13 +16,15 @@ const addData = catchAsync(async (req, res) => {
   let db = DB.getDb();
 
   const { metadata1, metadata2 } = req.body;
+  const { publickey } = req.headers;
 
   const hashedKey = sha256(Buffer.from(metadata1, 'hex'));
 
   const data = await db.get(hashedKey);
+
   if (data === undefined) {
-    const result = await db.put(hashedKey, metadata2);
-    res.status(httpStatus.OK).send({ hash: result });
+    await db.put(hashedKey, { metadata2, publickey });
+    res.status(httpStatus.OK).send({ hash: hashedKey });
   } else {
     res.status(httpStatus.CONFLICT).send();
   }
@@ -39,7 +41,7 @@ const getData = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send({
       data: {
         hashedKey: hashedKey,
-        metadata2: data,
+        metadata2: data.metadata2,
       },
     });
 });
@@ -62,12 +64,32 @@ const getList = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send({ data });
 });
 
+const getByPublicKey = catchAsync(async (req, res) => {
+  const { limit } = req.query;
+  const { publickey } = req.params;
+  let db = DB.getDb();
+
+  let list = [];
+  for await (const record of db.iterator()) {
+    if (list.length > limit - 1) break;
+    if (record.value.publickey === publickey) list = [...list, record.key];
+  }
+
+  const data = {
+    list,
+    count: list.length,
+  };
+
+  res.status(httpStatus.OK).send({ data });
+});
+
 const updateData = catchAsync(async (req, res) => {
   let db = DB.getDb();
   const { metadata2 } = req.body;
   const { hashedKey } = req.params;
+  const { publickey } = req.headers;
 
-  const result = await db.put(hashedKey, metadata2);
+  await db.put(hashedKey, { metadata2, publickey });
 
   res.status(httpStatus.OK).send({ message: 'Successfully updated' });
 });
@@ -127,6 +149,7 @@ export default {
   initDb,
   addData,
   getList,
+  getByPublicKey,
   getData,
   updateData,
   deleteData,

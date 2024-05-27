@@ -68,7 +68,7 @@ List of available routes:
 
 **Data routes**:
 
-- `POST /v1/data` - create a data\
+- `POST /v1/data` - add a metaData\
 
 ```bash
 curl -X POST http://localhost:3000/v1/data \
@@ -88,13 +88,13 @@ curl -X POST http://localhost:3000/v1/data \
 }'
 ```
 
-- `GET /v1/data/:hashedKey` - get a data\
+- `GET /v1/data/getByHashedkey/:hashedKey` - get a metaData by HashedKey\
 
 ```bash
-curl http://localhost:3000/v1/data/hashedKey
+curl http://localhost:3000/v1/data/getByHashedkey/:hashedKey
 ```
 
-- `PUT /v1/data/:hashedKey` - update a data\
+- `PUT /v1/data/:hashedKey` - update a metaData by HashedKey\
 
 ```bash
 curl -X PUT http://localhost:3000/v1/data/hashedKey \
@@ -113,7 +113,7 @@ curl -X PUT http://localhost:3000/v1/data/hashedKey \
 }'
 ```
 
-- `DELETE /v1/data/:hashedKey` - delete a data
+- `DELETE /v1/data/:hashedKey` - delete a metaData by HashedKey
 
 ```bash
 curl -X DELETE http://localhost:3000/v1/data/hashedKey \
@@ -122,10 +122,16 @@ curl -X DELETE http://localhost:3000/v1/data/hashedKey \
 -H "challenge: challengeCode" \
 ```
 
-- `GET /v1/data/getList` - get hash list of data
+- `GET /v1/data/getList` - get hash list of metaData
 
 ```bash
 curl -X GET http://localhost:3000/v1/data/getList
+```
+
+- `GET /v1/data/getHashListByPublicKey/:publickey` - get hash list by publickey
+
+```bash
+curl -X GET http://localhost:3000/v1/data/getHashListByPublicKey/:publickey
 ```
 
 ## License
